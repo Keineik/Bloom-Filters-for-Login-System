@@ -1,55 +1,55 @@
 #include "header.h"
 
-int h1(string s, int arrSize)
+int h1(string s)
 {
     ll hash = 0;
     for (int i = 0; i < s.size(); i++)
     {
         hash = (hash + ((int)s[i]));
-        hash = hash % arrSize;
+        hash = hash % MAXSIZE;
     }
     return hash;
 }
 
-int h2(string s, int arrSize)
+int h2(string s)
 {
     ll hash = 1;
     for (int i = 0; i < s.size(); i++)
     {
         hash = hash + pow(19, i) * s[i];
-        hash = hash % arrSize;
+        hash = hash % MAXSIZE;
     }
-    return hash % arrSize;
+    return hash % MAXSIZE;
 }
 
-int h3(string s, int arrSize)
+int h3(string s)
 {
     ll hash = 7;
     for (int i = 0; i < s.size(); i++)
     {
-        hash = (hash * 31 + s[i]) % arrSize;
+        hash = (hash * 31 + s[i]) % MAXSIZE;
     }
-    return hash % arrSize;
+    return hash % MAXSIZE;
 }
 
-int h4(string s, int arrSize)
+int h4(string s)
 {
     ll hash = 3;
     int p = 7;
     for (int i = 0; i < s.size(); i++)
     {
         hash += hash * 7 + s[0] * pow(p, i);
-        hash = hash % arrSize;
+        hash = hash % MAXSIZE;
     }
     return hash;
 }
 
-bool lookup(bool *bitarray, int arrSize, string s)
+bool lookup(bool *bitarray, string s)
 {
-    int a = h1(s, arrSize);
-    int b = h2(s, arrSize);
-    int c = h3(s, arrSize);
-    int d = h4(s, arrSize);
+    int a = h1(s);
+    int b = h2(s);
+    int c = h3(s);
+    int d = h4(s);
 
     if (bitarray[a] && bitarray[b] && bitarray && bitarray[d])
         return true;
@@ -57,14 +57,14 @@ bool lookup(bool *bitarray, int arrSize, string s)
         return false;
 }
 
-void insert(bool *bitarray, int arrSize, string s)
+void insert(bool *bitarray, string s)
 {
-    if (!lookup(bitarray, arrSize, s))
+    if (!lookup(bitarray, s))
     {
-        int a = h1(s, arrSize);
-        int b = h2(s, arrSize);
-        int c = h3(s, arrSize);
-        int d = h4(s, arrSize);
+        int a = h1(s);
+        int b = h2(s);
+        int c = h3(s);
+        int d = h4(s);
 
         bitarray[a] = true;
         bitarray[b] = true;
@@ -73,16 +73,16 @@ void insert(bool *bitarray, int arrSize, string s)
     }
 }
 
-int hashPassword(string s, int arrSize)
+int hashPassword(string s)
 {
-    ll hash = h1(s, arrSize) * pow(257.0, 4.0); 
-    hash = hash % arrSize; 
-    hash += h2(s, arrSize) * pow(257, 3); 
-    hash = hash % arrSize; 
-    hash += h3(s, arrSize) * pow(257, 2);
-    hash = hash % arrSize;  
-    hash += h4(s, arrSize) * 257;
-    hash = hash % arrSize; 
+    ll hash = h1(s) * pow(257.0, 4.0); 
+    hash = hash % MAXSIZE; 
+    hash += h2(s) * pow(257, 3); 
+    hash = hash % MAXSIZE; 
+    hash += h3(s) * pow(257, 2);
+    hash = hash % MAXSIZE;  
+    hash += h4(s) * 257;
+    hash = hash % MAXSIZE; 
 
     return hash;
 }

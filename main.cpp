@@ -2,19 +2,14 @@
 
 int main()
 {
-    bool bitarray[500];
-    bool weakPass[500];
-    int arrSize = 500;
-    bool passwordList[500][500];
-    for (int i = 0; i < arrSize; i++)
-    {
-        bitarray[i] = 0;
-        weakPass[i] = 0;
-        for (int j = 0; j < arrSize; j++)
-            passwordList[i][j] = 0;
-    }
-    readWeakPass(weakPass, arrSize);
-    readData(bitarray, arrSize, passwordList);
+    Arrays arrays;
+
+    memset(arrays.bitarray, 0, 500);
+    memset(arrays.bitWeakPass, 0, 500);
+    memset(arrays.bitPasswordList, 0, 250000);
+
+    readbitWeakPass(arrays);
+    readData(arrays);
     while (true)
     {
         Account currentUser = {"", ""};
@@ -32,13 +27,13 @@ int main()
         switch (cmd)
         {
         case 1:
-            registration(bitarray, weakPass, arrSize, passwordList);
+            registration(arrays);
             break;
         case 2:
-            multiRegistration(bitarray, weakPass, arrSize, passwordList);
+            multiRegistration(arrays);
             break;
         case 3:
-            login(currentUser, bitarray, arrSize, passwordList);
+            login(currentUser, arrays);
             checkLog = true;
             break;
         default:
@@ -60,7 +55,7 @@ int main()
             switch (cmd1)
             {
             case 1:
-                passwordChanging(currentUser, bitarray, weakPass, arrSize, passwordList);
+                passwordChanging(currentUser, arrays);
                 break;
             case 2:
                 currentUser = {"", ""};
