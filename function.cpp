@@ -205,13 +205,23 @@ bool checkLogin(Account user, Arrays &arrays)
         return false;
     }
     int index = hashPassword(user.username);
-    if (!lookup(arrays.bitPasswordList[index], user.password))
-    {
-        cout << "Invalid password." << endl;
-        return false;
+    
+    ifstream ifs("SignUp.txt");
+    bool existUsername = false;
+    while (!ifs.eof()) {
+        Account tempAcc;
+        getline(ifs, tempAcc.username, ' ');
+        getline(ifs, tempAcc.password);
+        if (tempAcc.username == user.username && tempAcc.password == user.password) {
+            cout << "Successfully logged in" << endl;
+            return true;
+        }
+        else if (tempAcc.username == user.username) existUsername = true;
     }
-    cout << "Successfully logged in" << endl;
-    return true;
+    
+    if (existUsername) cout << "Wrong password." << endl;
+    else cout << "Invalid username." << endl;
+    return false;
 }
 
 void login(Account &user, Arrays &arrays)
