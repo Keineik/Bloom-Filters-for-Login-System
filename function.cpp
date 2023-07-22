@@ -218,7 +218,8 @@ bool checkLogin(Account user, Arrays &arrays)
         }
         else if (tempAcc.username == user.username) existUsername = true;
     }
-    
+    ifs.close();
+
     if (existUsername) cout << "Wrong password." << endl;
     else cout << "Invalid username." << endl;
     return false;
