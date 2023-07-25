@@ -72,17 +72,3 @@ void insert(bool *bitarray, string s)
         bitarray[d] = true;
     }
 }
-
-int hashPassword(string s)
-{
-    ll hash = h1(s) * pow(257.0, 4.0); 
-    hash = hash % MAXSIZE; 
-    hash += h2(s) * pow(257, 3); 
-    hash = hash % MAXSIZE; 
-    hash += h3(s) * pow(257, 2);
-    hash = hash % MAXSIZE;  
-    hash += h4(s) * 257;
-    hash = hash % MAXSIZE; 
-
-    return hash;
-}

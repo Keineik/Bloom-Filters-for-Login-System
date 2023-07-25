@@ -10,10 +10,8 @@ void readbitWeakPass(Arrays &arrays)
     {
         if (s == "")
             break;
-        if (!lookup(arrays.bitWeakPass, s)) {
+        if (!lookup(arrays.bitWeakPass, s))
             insert(arrays.bitWeakPass, s);
-            arrays.weakPassword.push_back(s);
-        }
     }
     ifs.close();
 }
@@ -32,7 +30,7 @@ void readData(Arrays &arrays)
         string username, password;
         ss >> username >> password;
         insert(arrays.bitarray, username);
-        insert(arrays.bitPasswordList[hashPassword(username)], password);
+        insert(arrays.bitPasswordList, password);
     }
     ifs.close();
 }
@@ -112,17 +110,12 @@ bool CheckPassword(string username, string password, Arrays &arrays)
     }
     else if (lookup(arrays.bitWeakPass, password))
     {   
-        bool isWeak = false;
-        for (string s: arrays.weakPassword) {
-            if (s == password) {
-                isWeak = true;
-                break;
-            }
+        ifstream ifs("WeakPass.txt");
+        string weakPass;
+        while (getline(ifs, weakPass)) {
+            if (password == weakPass) return false;
         }
-        if (isWeak) {
-            cout << "Your password is too weak." << endl;
-            return false;
-        }
+        ifs.close();
     }
     return true;
 }
@@ -153,8 +146,7 @@ void registration(Arrays &arrays)
     failIn.close();
 
     insert(arrays.bitarray, username);
-    insert(arrays.bitPasswordList[hashPassword(username)], password);
-    // bitPasswordList[hashPassword(username)].push_back(password);
+    insert(arrays.bitPasswordList, password);
     ofstream successIn("SignUp.txt", ios::app);
     successIn << username << ' ' << password << endl;
     successIn.close();
@@ -184,8 +176,7 @@ void multiRegistration(Arrays &arrays)
         if (CheckRegistration(list[i].username, list[i].password, arrays))
         {
             insert(arrays.bitarray, list[i].username);
-            // bitPasswordList[hashPassword(list[i].username)].push_back(list[i].password);
-            insert(arrays.bitPasswordList[hashPassword(list[i].username)], list[i].password);
+            insert(arrays.bitPasswordList, list[i].password);
             successIn << list[i].username << ' ' << list[i].password << endl;
         }
         else
@@ -204,7 +195,6 @@ bool checkLogin(Account user, Arrays &arrays)
         cout << "Invalid username." << endl;
         return false;
     }
-    int index = hashPassword(user.username);
     
     ifstream ifs("SignUp.txt");
     bool existUsername = false;
@@ -240,7 +230,7 @@ void passwordChanging(Account user, Arrays &arrays)
 {
     memset(arrays.bitarray, 0, 500);
     memset(arrays.bitWeakPass, 0, 500);
-    memset(arrays.bitPasswordList, 0, 250000);
+    memset(arrays.bitPasswordList, 0, 500);
 
     vector<Account> list;
     ifstream ifs("SignUp.txt");

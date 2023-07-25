@@ -6,7 +6,7 @@ int main()
 
     memset(arrays.bitarray, 0, 500);
     memset(arrays.bitWeakPass, 0, 500);
-    memset(arrays.bitPasswordList, 0, 250000);
+    memset(arrays.bitPasswordList, 0, 500);
 
     readbitWeakPass(arrays);
     readData(arrays);
