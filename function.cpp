@@ -228,9 +228,9 @@ void login(Account &user, Arrays &arrays)
 
 void passwordChanging(Account user, Arrays &arrays)
 {
-    memset(arrays.bitarray, 0, 500);
-    memset(arrays.bitWeakPass, 0, 500);
-    memset(arrays.bitPasswordList, 0, 500);
+    memset(arrays.bitarray, 0, MAXSIZE);
+    memset(arrays.bitWeakPass, 0, MAXSIZE);
+    memset(arrays.bitPasswordList, 0, MAXSIZE);
 
     vector<Account> list;
     ifstream ifs("SignUp.txt");
