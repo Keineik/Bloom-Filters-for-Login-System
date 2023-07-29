@@ -189,9 +189,9 @@ void multiRegistration(Arrays &arrays)
 
 bool checkLogin(Account user, Arrays &arrays)
 {
-    if (!lookup(arrays.bitarray, user.username))
+    if (!lookup(arrays.bitarray, user.username) || !lookup(arrays.bitPasswordList, user.password)
     {
-        cout << "Invalid username." << endl;
+        cout << "Invalid username or password." << endl;
         return false;
     }
     
