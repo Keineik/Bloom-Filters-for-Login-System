@@ -59,16 +59,12 @@ bool lookup(bool *bitarray, string s)
 
 void insert(bool *bitarray, string s)
 {
-    if (!lookup(bitarray, s))
-    {
-        int a = h1(s);
-        int b = h2(s);
-        int c = h3(s);
-        int d = h4(s);
-
-        bitarray[a] = true;
-        bitarray[b] = true;
-        bitarray[c] = true;
-        bitarray[d] = true;
-    }
+    int a = h1(s);
+    int b = h2(s);
+    int c = h3(s);
+    int d = h4(s);
+    bitarray[a] = true;
+    bitarray[b] = true;
+    bitarray[c] = true;
+    bitarray[d] = true;
 }
