@@ -10,8 +10,7 @@ void readbitWeakPass(Arrays &arrays)
     {
         if (s == "")
             break;
-        if (!lookup(arrays.bitWeakPass, s))
-            insert(arrays.bitWeakPass, s);
+        insert(arrays.bitWeakPass, s);
     }
     ifs.close();
 }
