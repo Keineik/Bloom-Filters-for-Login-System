@@ -6,6 +6,7 @@
 #include <vector>
 #include <cmath>
 #include <cstring>
+#include <iomanip>
 using namespace std;
 
 #define ll long long int
@@ -17,8 +18,8 @@ struct Account{
 };
 
 struct Arrays {
-    bool bitarray[MAXSIZE];
-    bool bitWeakPass[MAXSIZE]; 
-    bool bitPasswordList[MAXSIZE][MAXSIZE];
+    int bitarray[MAXSIZE];
+    int bitWeakPass[MAXSIZE]; 
+    int bitPasswordList[MAXSIZE];
     vector<string> weakPassword;
 };

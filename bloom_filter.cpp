@@ -44,7 +44,7 @@ int h4(string s)
     return hash;
 }
 
-bool lookup(bool *bitarray, string s)
+bool lookup(int *bitarray, string s)
 {
     int a = h1(s);
     int b = h2(s);
@@ -57,14 +57,26 @@ bool lookup(bool *bitarray, string s)
         return false;
 }
 
-void insert(bool *bitarray, string s)
+void insert(int *bitarray, string s)
 {
     int a = h1(s);
     int b = h2(s);
     int c = h3(s);
     int d = h4(s);
-    bitarray[a] = true;
-    bitarray[b] = true;
-    bitarray[c] = true;
-    bitarray[d] = true;
+    bitarray[a] ++;
+    bitarray[b] ++;
+    bitarray[c] ++;
+    bitarray[d] ++;
+}
+
+void deleteBit(int *bitarray, string s)
+{
+    int a = h1(s);
+    int b = h2(s);
+    int c = h3(s);
+    int d = h4(s);
+    bitarray[a] --;
+    bitarray[b] --;
+    bitarray[c] --;
+    bitarray[d] --;
 }

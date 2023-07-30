@@ -34,7 +34,7 @@ void readData(Arrays &arrays)
     ifs.close();
 }
 
-bool CheckUsername(string username, bool *bitarray)
+bool CheckUsername(string username, int *bitarray)
 {
     bool checkSpace = false;
     for (int i = 0; i < username.length(); i++)
@@ -189,7 +189,7 @@ void multiRegistration(Arrays &arrays)
 
 bool checkLogin(Account user, Arrays &arrays)
 {
-    if (!lookup(arrays.bitarray, user.username) || !lookup(arrays.bitPasswordList, user.password)
+    if (!lookup(arrays.bitarray, user.username) || !lookup(arrays.bitPasswordList, user.password))
     {
         cout << "Invalid username or password." << endl;
         return false;
@@ -227,10 +227,6 @@ void login(Account &user, Arrays &arrays)
 
 void passwordChanging(Account user, Arrays &arrays)
 {
-    memset(arrays.bitarray, 0, MAXSIZE);
-    memset(arrays.bitWeakPass, 0, MAXSIZE);
-    memset(arrays.bitPasswordList, 0, MAXSIZE);
-
     vector<Account> list;
     ifstream ifs("SignUp.txt");
     if (!ifs)
@@ -257,7 +253,10 @@ void passwordChanging(Account user, Arrays &arrays)
         cout << "Please input your current password: ";
         getline(cin, password, '\n');
         if (password != list[index].password)
+        {
+            cout << "The input password does not match the current password.\n";
             continue;
+        }
         break;
     }
     while (true)
@@ -268,7 +267,9 @@ void passwordChanging(Account user, Arrays &arrays)
         if (!CheckPassword(list[index].username, password, arrays))
             continue;
         cout << "Successfully changed your password" << endl;
+        deleteBit(arrays.bitPasswordList, list[index].password);
         list[index].password = password;
+        insert(arrays.bitPasswordList, list[index].password);
         break;
     }
 
@@ -276,6 +277,4 @@ void passwordChanging(Account user, Arrays &arrays)
     for (int i = 0; i < list.size(); i++)
         ofs << list[i].username << ' ' << list[i].password << endl;
     ofs.close();
-
-    readData(arrays);
 }
