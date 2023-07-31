@@ -17,7 +17,7 @@ void readbitWeakPass(Arrays &arrays)
 
 void readData(Arrays &arrays)
 {
-    ifstream ifs("SignUp.txt");
+    ifstream ifs("accounts.txt");
     if (!ifs)
         return;
     string s;
@@ -131,7 +131,6 @@ bool CheckRegistration(string username, string password, Arrays &arrays)
 
 void registration(Arrays &arrays)
 {
-    ofstream failIn("Fail.txt", ios::app);
     string username, password;
     while (true)
     {
@@ -140,49 +139,56 @@ void registration(Arrays &arrays)
         cout << "Please input your password: ";
         getline(cin, password, '\n');
         if (CheckRegistration(username, password, arrays)) break;
-        failIn << username << ' ' << password << endl;
-    } 
-    failIn.close();
+    }
 
     insert(arrays.bitarray, username);
     insert(arrays.bitPasswordList, password);
-    ofstream successIn("SignUp.txt", ios::app);
+
+    ofstream successIn("accounts.txt", ios::app);
     successIn << username << ' ' << password << endl;
     successIn.close();
 }
 
 void multiRegistration(Arrays &arrays)
 {
-    ofstream successIn("SignUp.txt", ios::app), failIn("Fail.txt", ios::app);
-    cout << "Please input the number of account you want to register: ";
-    int accountNum;
-    cin >> accountNum;
-    cin.ignore();
+    ifstream ifs("SignUp.txt");
+    ofstream successIn("accounts.txt", ios::app), failIn("Fail.txt");
+
     vector<Account> list;
-    for (int i = 0; i < accountNum; i++)
+
+    Account user;
+    while (ifs >> user.username)
     {
-        Account user;
-        cout << "User " << i + 1 << endl;
-        cout << "Please input your username: ";
-        getline(cin, user.username, '\n');
-        cout << "Please input your password: ";
-        getline(cin, user.password, '\n');
+        if (user.username == "") return;
+        ifs >> user.password;
         list.push_back(user);
     }
+
+    streambuf* orig_buf = cout.rdbuf();
+    cout.rdbuf(NULL);
+
+    int countSuccess = 0, countFail = 0;
     for (int i = 0; i < list.size(); i++)
     {
-        cout << "Account " << i + 1 << ": ";
         if (CheckRegistration(list[i].username, list[i].password, arrays))
         {
             insert(arrays.bitarray, list[i].username);
             insert(arrays.bitPasswordList, list[i].password);
             successIn << list[i].username << ' ' << list[i].password << endl;
+            countSuccess++;
         }
         else
         {
             failIn << list[i].username << ' ' << list[i].password << endl;
+            countFail++;
         }
     }
+    cout.rdbuf(orig_buf);
+
+    cout << "Finish Multiple Registrations" << endl;
+    cout << "Successfully Registered " << countSuccess << " Accounts" << endl;
+    cout << "There are " << countFail << " Failed Registration Attempts" << endl;
+
     successIn.close();
     failIn.close();
 }
@@ -195,7 +201,7 @@ bool checkLogin(Account user, Arrays &arrays)
         return false;
     }
     
-    ifstream ifs("SignUp.txt");
+    ifstream ifs("accounts.txt");
     bool existUsername = false;
     while (!ifs.eof()) {
         Account tempAcc;
@@ -228,7 +234,7 @@ void login(Account &user, Arrays &arrays)
 void passwordChanging(Account user, Arrays &arrays)
 {
     vector<Account> list;
-    ifstream ifs("SignUp.txt");
+    ifstream ifs("accounts.txt");
     if (!ifs)
         return;
     string s;
@@ -273,7 +279,7 @@ void passwordChanging(Account user, Arrays &arrays)
         break;
     }
 
-    ofstream ofs("SignUp.txt");
+    ofstream ofs("accounts.txt");
     for (int i = 0; i < list.size(); i++)
         ofs << list[i].username << ' ' << list[i].password << endl;
     ofs.close();
