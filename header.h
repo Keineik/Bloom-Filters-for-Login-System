@@ -10,7 +10,8 @@
 using namespace std;
 
 #define ll long long int
-#define MAXSIZE 40000
+#define MAXSIZE 69000
+#define MAXHASH 7
 
 struct Account{
     string username;
