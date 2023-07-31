@@ -11,8 +11,12 @@ int h1(string s)
 int h2(string s)
 {
     ll hash = 1;
+    ll power = 1;
     for (int i = 0; i < s.size(); i++)
-        hash = (hash + pow(19, i) * s[i]) % MAXSIZE;
+    {
+         hash = (hash + power * s[i]) % MAXSIZE;
+         power = power * 19 % MAXSIZE;
+    }
     return hash % MAXSIZE;
 }
 
@@ -27,8 +31,12 @@ int h3(string s)
 int h4(string s)
 {
     ll hash = 3;
+    ll power = 1; 
     for (int i = 0; i < s.size(); i++)
-        hash = (hash + hash * 7 + s[0] * pow(7, i)) % MAXSIZE;
+    {
+         hash = (hash + hash * 7 + s[0] * power) % MAXSIZE;   
+         power = power * 7 % MAXSIZE;
+    }
     return hash;
 }
 
