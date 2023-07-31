@@ -4,10 +4,7 @@ int h1(string s)
 {
     ll hash = 0;
     for (int i = 0; i < s.size(); i++)
-    {
-        hash = (hash + ((int)s[i]));
-        hash = hash % MAXSIZE;
-    }
+        hash = (hash + ((int)s[i])) % MAXSIZE;
     return hash;
 }
 
@@ -15,10 +12,7 @@ int h2(string s)
 {
     ll hash = 1;
     for (int i = 0; i < s.size(); i++)
-    {
-        hash = hash + pow(19, i) * s[i];
-        hash = hash % MAXSIZE;
-    }
+        hash = (hash + pow(19, i) * s[i]) % MAXSIZE;
     return hash % MAXSIZE;
 }
 
@@ -26,21 +20,15 @@ int h3(string s)
 {
     ll hash = 7;
     for (int i = 0; i < s.size(); i++)
-    {
         hash = (hash * 31 + s[i]) % MAXSIZE;
-    }
     return hash % MAXSIZE;
 }
 
 int h4(string s)
 {
     ll hash = 3;
-    int p = 7;
     for (int i = 0; i < s.size(); i++)
-    {
-        hash += hash * 7 + s[0] * pow(p, i);
-        hash = hash % MAXSIZE;
-    }
+        hash = (hash + hash * 7 + s[0] * pow(7, i)) % MAXSIZE;
     return hash;
 }
 
