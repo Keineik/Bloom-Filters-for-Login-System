@@ -1,5 +1,6 @@
 #include "header.h"
 
+// The hash function used for bloom filter
 int getHash(int hashID, string s) {
     ll sdbm = 0;
     for (int i = 0; i < s.size(); i++) {
@@ -16,6 +17,7 @@ int getHash(int hashID, string s) {
     return int((sdbm + (hashID - 1)*djb2) % MAXSIZE);
 }
 
+// Look up the element in the filter
 bool lookup(int *bitarray, string s)
 {
     for (int i = 1; i <= MAXHASH; i++)
@@ -24,12 +26,14 @@ bool lookup(int *bitarray, string s)
     return true;
 }
 
+// Insert an element into the filter
 void insert(int *bitarray, string s)
 {
     for (int i = 1; i <= MAXHASH; i++)
         bitarray[getHash(i, s)]++;
 }
 
+// Delete an element from the element
 void deleteBit(int *bitarray, string s)
 {
     for (int i = 1; i <= MAXHASH; i++)
