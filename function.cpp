@@ -3,7 +3,7 @@
 // For reading the weak password from the file into the filter
 void readbitWeakPass(Arrays &arrays)
 {
-    ifstream ifs("bitWeakPass.txt");
+    ifstream ifs("WeakPass.txt");
     if (!ifs)
         return;
     string s;
