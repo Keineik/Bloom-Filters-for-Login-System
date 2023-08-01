@@ -1,5 +1,6 @@
 #include "bloom_filter.cpp"
 
+// For reading the weak password from the file into the filter
 void readbitWeakPass(Arrays &arrays)
 {
     ifstream ifs("bitWeakPass.txt");
@@ -15,6 +16,7 @@ void readbitWeakPass(Arrays &arrays)
     ifs.close();
 }
 
+// For reading the accounts' information into the username filter and password filter
 void readData(Arrays &arrays)
 {
     ifstream ifs("accounts.txt");
@@ -34,6 +36,7 @@ void readData(Arrays &arrays)
     ifs.close();
 }
 
+// For checking whether the username is valid or not
 bool CheckUsername(string username, int *bitarray)
 {
     bool checkSpace = false;
@@ -66,6 +69,7 @@ bool CheckUsername(string username, int *bitarray)
     return true;
 }
 
+// For checking whether the password is valid or not
 bool CheckPassword(string username, string password, Arrays &arrays)
 {
     bool upperCheck = false, lowerCheck = false, numCheck = false, specialCharCheck = false, spaceCheck = false;
@@ -119,6 +123,7 @@ bool CheckPassword(string username, string password, Arrays &arrays)
     return true;
 }
 
+// Checking whether the registration request is valid or not
 bool CheckRegistration(string username, string password, Arrays &arrays)
 {
     if (CheckUsername(username, arrays.bitarray) && CheckPassword(username, password, arrays))
@@ -129,6 +134,7 @@ bool CheckRegistration(string username, string password, Arrays &arrays)
     return false;
 }
 
+// For creating an account
 void registration(Arrays &arrays)
 {
     string username, password;
@@ -149,6 +155,7 @@ void registration(Arrays &arrays)
     successIn.close();
 }
 
+// For creating multiple accounts which are read from file
 void multiRegistration(Arrays &arrays)
 {
     ifstream ifs("SignUp.txt");
@@ -193,6 +200,7 @@ void multiRegistration(Arrays &arrays)
     failIn.close();
 }
 
+// Checking whether login request is valid or not
 bool checkLogin(Account user, Arrays &arrays)
 {
     if (!lookup(arrays.bitarray, user.username) || !lookup(arrays.bitPasswordList, user.password))
@@ -220,6 +228,7 @@ bool checkLogin(Account user, Arrays &arrays)
     return false;
 }
 
+// For users to login their account
 void login(Account &user, Arrays &arrays)
 {
     do
@@ -231,6 +240,7 @@ void login(Account &user, Arrays &arrays)
     } while (!checkLogin(user, arrays));
 }
 
+// For users to change their accounts' password
 void passwordChanging(Account user, Arrays &arrays)
 {
     vector<Account> list;
